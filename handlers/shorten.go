@@ -24,7 +24,7 @@ func CreateShortURL(w http.ResponseWriter , r*http.Request)  {
 
 	id :=ksuid.New().String();
 
-	shortenedURL :=fmt.Sprintf("http://localhost:8080/%s", id)
+	shortenedURL :=fmt.Sprintf("http://localhost:8082/%s", id)
 
 	url :=models.URL{
 		ID: id,

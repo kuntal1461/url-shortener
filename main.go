@@ -2,7 +2,12 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"net/http"
 	"url-shortener/db"
+	"url-shortener/handlers"
+
+	"github.com/gorilla/mux"
 )
 
 
@@ -12,13 +17,16 @@ func main()  {
 	// Initialize the database connection
 	db.Init()
 
-	database := db.GetDB();
+	// Set up the router
+	r := mux.NewRouter()
+	r.HandleFunc("/", handlers.CreateShortURL).Methods("POST")
+	r.HandleFunc("/{id}", handlers.RedirectURL).Methods("GET")
 
-	if database !=nil {
-		fmt.Println("The connectin is working and verifed ")
-	}else{
-		fmt.Println("The connection is not working ")
-	}
+	// Serve static files
+	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./static/")))
+
+	// Start the server
+	log.Fatal(http.ListenAndServe(":8082", r))
 	
 
 
