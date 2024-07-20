@@ -26,10 +26,7 @@ func main()  {
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./static/")))
 
 	// Start the server
-	log.Fatal(http.ListenAndServe(":8082", r))
-	
-
-	
+	log.Fatal(http.ListenAndServe(":8082", r))	
 
 }
  
