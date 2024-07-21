@@ -10,23 +10,25 @@ import (
 	"github.com/gorilla/mux"
 )
 
-
-func main()  {
+func main() {
 	fmt.Println("This is the new url shortener project")
-	
+
 	// Initialize the database connection
 	db.Init()
 
 	// Set up the router
 	r := mux.NewRouter()
-	r.HandleFunc("/", handlers.CreateShortURL).Methods("POST")
+	// Log the router state
+	log.Printf("Router state before adding routes: %+v\n", r)
+
+	r.HandleFunc("/shorten", handlers.CreateShortURL).Methods("POST")
 	r.HandleFunc("/{id}", handlers.RedirectURL).Methods("GET")
 
 	// Serve static files
-	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./static/")))
+	fileServer := http.FileServer(http.Dir("./static/")) // Serve files from the 'static' directory
+	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", fileServer))
 
 	// Start the server
-	log.Fatal(http.ListenAndServe(":8082", r))	
+	log.Fatal(http.ListenAndServe(":8082", r))
 
 }
- 
