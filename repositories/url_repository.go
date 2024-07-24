@@ -7,13 +7,13 @@ import (
 
 
 type URLRepository interface {
-	create(url *models.URL) error
+	Create(url *models.URL) error
 }
 
 type urlRepositoryImpl struct{}
 
-
-func newUrlRepository()  URLRepository{
+// if the function is upercase then it will be public .
+func NewUrlRepository()  URLRepository{
 	return &urlRepositoryImpl{}
 }
 

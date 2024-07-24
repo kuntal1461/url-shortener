@@ -8,11 +8,11 @@ import (
 
 var DB *sqlx.DB
 
-func setUpDataBase()  error {
+func SetUpDatabase()  error {
 	var err error
 	// Update the connection string below with your actual database credentials
     dsn := "user=super_shortener dbname=url-shortener sslmode=disable password=Admin"
-	DB,err :=sqlx.Connect("postgres",dsn)
+	DB,err =sqlx.Connect("postgres",dsn)
 
 	if err != nil {
 		return err
@@ -20,4 +20,8 @@ func setUpDataBase()  error {
 	}
 	return nil
 	
+}
+
+func HealthCheck() error {
+    return DB.Ping()
 }
