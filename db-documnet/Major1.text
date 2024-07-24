@@ -1,0 +1,12 @@
+-- Drop the existing 'urls' table if it exists
+DROP TABLE IF EXISTS urls;
+
+-- Create the new 'urls' table with updated schema
+CREATE TABLE urls (
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+    id SERIAL PRIMARY KEY,
+    original TEXT NOT NULL,
+    shortened TEXT NOT NULL UNIQUE,
+    expires_at TIMESTAMP WITH TIME ZONE,
+    count INTEGER DEFAULT 0
+);
