@@ -1,44 +1,27 @@
 package db
 
 import (
-	"database/sql"
-	"log"
-
-	_ "github.com/lib/pq" //PostgreSql driver
+	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq" // PostgreSQL driver
 )
 
-var Db *sql.DB // public (Exported)
 
-// init initializes the database connection
-func Init() {
+var DB *sqlx.DB
+
+func SetUpDatabase()  error {
 	var err error
-
-
-	// user name need to change accordingly 
-	connStr := "user=super_shortener dbname=url-shortener sslmode=disable password=Admin"
-
-	Db, err = sql.Open("postgres", connStr)
+	// Update the connection string below with your actual database credentials
+    dsn := "user=super_shortener dbname=url-shortener sslmode=disable password=Admin"
+	DB,err =sqlx.Connect("postgres",dsn)
 
 	if err != nil {
-		log.Fatal("Failed to open the db connetion", err)
-
+		return err
+		
 	}
-	err = Db.Ping()
-	if err != nil {
-		log.Fatal("failed to connect with the Db ", err)
-	}
-	log.Println("The Db connection established")
-
-	// Run a simple query to verify the connection
-	var version string
-	err = Db.QueryRow("SELECT version()").Scan(&version)
-	if err != nil {
-		log.Fatal("Failed to run query: ", err)
-	}
-	log.Println("PostgreSQL version: ", version)
-
+	return nil
+	
 }
 
-func GetDB() *sql.DB {
-	return Db
+func HealthCheck() error {
+    return DB.Ping()
 }
