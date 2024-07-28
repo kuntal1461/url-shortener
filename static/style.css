@@ -1,34 +1,5 @@
 body {
     font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
-
-.container {
+    margin: 40px;
     text-align: center;
-}
-
-#shorten-form {
-    margin-bottom: 20px;
-}
-
-#original-url {
-    padding: 10px;
-    width: 300px;
-    margin-right: 10px;
-}
-
-button {
-    padding: 10px;
-}
-
-#result {
-    margin-top: 20px;
-}
-
-.hidden {
-    display: none;
 }
