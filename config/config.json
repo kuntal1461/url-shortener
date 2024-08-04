@@ -1,0 +1,4 @@
+{
+    "databaseDSN": "user=super_shortener dbname=url-shortener sslmode=disable password=Admin",
+    "serverPort": ":8080"
+}
