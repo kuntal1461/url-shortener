@@ -2,8 +2,8 @@ package configs
 
 import (
 	"encoding/json"
-	"os"
 	"log"
+	"os"
 )
 
 type Config struct {
@@ -12,7 +12,7 @@ type Config struct {
 }
 
 func LoadConfig() (*Config, error) {
-	// Use relative path from current working directory or the path specific to Vercel if needed
+	// Open the config file for default configurations
 	configFile, err := os.Open("config/config.json")
 	if err != nil {
 		log.Fatalf("Failed to open config file: %v", err)
@@ -26,5 +26,13 @@ func LoadConfig() (*Config, error) {
 		log.Fatalf("Failed to decode config JSON: %v", err)
 		return nil, err
 	}
+
+	// Use environment variables if set
+	if dsn := os.Getenv("POSTGRES_URL"); dsn != "" {
+		config.DataBaseDsn = dsn
+	} else {
+		log.Println("Using default database DSN from config file")
+	}
+
 	return &config, nil
 }
